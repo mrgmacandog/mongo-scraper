@@ -2,12 +2,12 @@
 const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
-const axios = require("axios");
-const cheerio = require("cheerio");
 
+// TODO: See if this is necessary
 // Require all models
-// const db = require("./models");
+const db = require("./models");
 
+// Set the port
 const PORT = (process.env.PORT || 3000);
 
 // Initialize Express
@@ -24,33 +24,12 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // TODO: Connect to the Mongo DB
+mongoose.connect("mongodb://localhost/entrepreneur", { useNewUrlParser: true });
 
-// TODO: Routes
-
-// Test route
-app.get("/", (req, res) => res.send("Success"));
-
-// Scrape route
-app.get("/scrape", (req, res) => {
-    // Get website
-    axios.get("https://www.entrepreneur.com/topic/coding/1").then(response => {
-        // Save HTML into $
-        const $ = cheerio.load(response.data);
-
-        // Article 1 Title
-        $("#latest .feature h3").each((i, element) => {
-            console.log($(element).find("a").text().trim());
-        });
-
-        // TODO: Differentiate between title and author
-        // Articles 2 - 4 Title
-        $("#latest .col").each((i, element) => {
-            console.log($(element).find("a").text().trim());
-        });
-
-        res.send("Scraping...");
-    })
-});
+// TODO: Move routes to controller
+// Routes
+require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
 
 // Start the server
 app.listen(PORT, () => console.log(`App running on http://localhost:${PORT}`));
