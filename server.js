@@ -26,9 +26,31 @@ app.use(express.static("public"));
 // TODO: Connect to the Mongo DB
 
 // TODO: Routes
+
+// Test route
 app.get("/", (req, res) => res.send("Success"));
 
-// Start the server
-app.listen(PORT, function() {
-  console.log(`App running on http://localhost:${PORT}`);
+// Scrape route
+app.get("/scrape", (req, res) => {
+    // Get website
+    axios.get("https://www.entrepreneur.com/topic/coding/1").then(response => {
+        // Save HTML into $
+        const $ = cheerio.load(response.data);
+
+        // Article 1 Title
+        $("#latest .feature h3").each((i, element) => {
+            console.log($(element).find("a").text().trim());
+        });
+
+        // TODO: Differentiate between title and author
+        // Articles 2 - 4 Title
+        $("#latest .col").each((i, element) => {
+            console.log($(element).find("a").text().trim());
+        });
+
+        res.send("Scraping...");
+    })
 });
+
+// Start the server
+app.listen(PORT, () => console.log(`App running on http://localhost:${PORT}`));
