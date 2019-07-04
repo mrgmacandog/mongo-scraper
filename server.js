@@ -2,12 +2,12 @@
 const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
-const axios = require("axios");
-const cheerio = require("cheerio");
 
+// TODO: See if this is necessary
 // Require all models
-// const db = require("./models");
+const db = require("./models");
 
+// Set the port
 const PORT = (process.env.PORT || 3000);
 
 // Initialize Express
@@ -24,11 +24,12 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // TODO: Connect to the Mongo DB
+mongoose.connect("mongodb://localhost/entrepreneur", { useNewUrlParser: true });
 
-// TODO: Routes
-app.get("/", (req, res) => res.send("Success"));
+// TODO: Move routes to controller
+// Routes
+require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
 
 // Start the server
-app.listen(PORT, function() {
-  console.log(`App running on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`App running on http://localhost:${PORT}`));
