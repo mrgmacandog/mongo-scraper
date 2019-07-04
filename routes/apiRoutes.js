@@ -33,4 +33,19 @@ module.exports = app => {
         })
         // res.send("In GET /scrape")
     });
+
+    // Get all articles from the database
+    app.get("/articles", (req, res) => {
+        db.Article.find({})
+            .then(dbArticle => res.json(dbArticle))
+            .catch(err => res.json(err));
+    });
+
+    // Get a specific article from the database
+    app.get("/articles/:id", (req, res) => {
+        db.Article.findOne({ _id: req.params.id })
+            .populate("note")
+            .then(dbArticle => res.json(dbArticle))
+            .catch(err => res.json(err));
+    })
 };
