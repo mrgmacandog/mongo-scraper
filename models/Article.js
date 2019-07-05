@@ -30,6 +30,11 @@ const ArticleSchema = new Schema({
     type: String,
     required: true
   },
+  // `image` is required and of type String
+  image: {
+    type: String,
+    required: true
+  },
   
   // `note` is an object that stores a Note id
   note: {
