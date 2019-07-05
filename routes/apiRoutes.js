@@ -77,7 +77,7 @@ module.exports = app => {
     // Get a specific article from the database
     app.get("/articles/:id", (req, res) => {
         db.Article.findOne({ _id: req.params.id })
-            .populate("note")
+            .populate("comment")
             .then(dbArticle => res.json(dbArticle))
             .catch(err => res.json(err));
     })
