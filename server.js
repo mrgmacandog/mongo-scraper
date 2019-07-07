@@ -2,6 +2,7 @@
 const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const exphbs = require("express-handlebars");
 
 // TODO: See if this is necessary
 // Require all models
@@ -23,10 +24,13 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
-// TODO: Connect to the Mongo DB
+// Set template engine to handlebars
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+// Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/entrepreneur", { useNewUrlParser: true });
 
-// TODO: Move routes to controller
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
