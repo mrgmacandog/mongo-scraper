@@ -88,7 +88,7 @@ module.exports = app => {
         db.Comment.create(req.body)
             .then(dbComment => dbArticle.findOneAndUpdate(
                 { _id: req.params.id },
-                { note: dbComment.id},
+                { note: dbComment._id},
                 { new: true }
             ))
             .then(dbArticle => res.json(dbArticle))
