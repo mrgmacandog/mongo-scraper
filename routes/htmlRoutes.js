@@ -6,10 +6,9 @@ module.exports = app => {
 
     app.get("/test", (req, res) => {
         db.Article.find({})
-            .then(dbArticle => {
-                console.log(dbArticle);
-                res.render("index", { articles: dbArticle })
-            })
+            .then(dbArticle => res.render("index", {
+                articles: dbArticle
+            }))
             .catch(err => res.json(err));
     });
 }
