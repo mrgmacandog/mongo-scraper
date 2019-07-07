@@ -48,7 +48,6 @@ function scrapePage(pageNumber) {
                 link: link,
                 image: image
             };
-            console.log(articleObj);
 
             // Add articleObj to Articles collection in DB
             db.Article.create(articleObj)
@@ -56,6 +55,8 @@ function scrapePage(pageNumber) {
                 .catch(err => console.log(err));
         });
     })
+
+    // TODO: Call this function again if there is another page to scrape
 }
 
 // Export API routes
@@ -77,8 +78,20 @@ module.exports = app => {
     // Get a specific article from the database
     app.get("/articles/:id", (req, res) => {
         db.Article.findOne({ _id: req.params.id })
-            .populate("note")
+            .populate("comment")
             .then(dbArticle => res.json(dbArticle))
             .catch(err => res.json(err));
     })
+
+    // Add or update an Article's associated Comment
+    app.post("articles/:id", (req, res) => {
+        db.Comment.create(req.body)
+            .then(dbComment => dbArticle.findOneAndUpdate(
+                { _id: req.params.id },
+                { note: dbComment._id},
+                { new: true }
+            ))
+            .then(dbArticle => res.json(dbArticle))
+            .catch(err => res.json(err));
+    });
 };
