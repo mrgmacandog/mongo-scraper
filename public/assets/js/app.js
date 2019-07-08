@@ -65,6 +65,18 @@
             divEl.append(deleteBtnEl);
 
             $(this).parent().prev().append(divEl);
+
+            console.log(`/api/articles/${$(this).attr("article-id")}`);
+            
+
+            // Post comment to API
+            $.ajax(`/api/articles/${$(this).attr("article-id")}`, {
+                type: "POST",
+                data: {
+                    name: inputName,
+                    comment: inputComment
+                }
+            });
         });
     });
 })();
