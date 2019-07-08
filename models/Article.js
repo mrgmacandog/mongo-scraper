@@ -36,8 +36,8 @@ const ArticleSchema = new Schema({
         required: true
     },
 
-    // `comment` is an object that stores a Comment id
-    comment: [
+    // `comments` is an object that stores a Comment id
+    comments: [
         {
             type: Schema.Types.ObjectId,
             ref: "Comment"

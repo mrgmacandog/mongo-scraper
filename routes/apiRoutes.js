@@ -78,7 +78,7 @@ module.exports = app => {
     // Get a specific article from the database
     app.get("/api/articles/:id", (req, res) => {
         db.Article.findOne({ _id: req.params.id })
-            .populate("comment")
+            .populate("comments")
             .then(dbArticle => res.json(dbArticle))
             .catch(err => res.json(err));
     })
@@ -86,11 +86,11 @@ module.exports = app => {
     // Add or update an Article's associated Comment
     app.post("/api/articles/:id", (req, res) => {
         db.Comment.create(req.body)
-            .then(dbComment => db.Article.findOneAndUpdate(
+            .then(dbComment => db.Article.update(
                 { _id: req.params.id },
                 { $push:
                     {
-                        comment: dbComment._id
+                        comments: dbComment._id
                     }
                 },
                 { new: true }
