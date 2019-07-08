@@ -7,20 +7,27 @@
     $(document).ready(function () {
         // TODO: Refactor display comment
         function displayComment(previousCommentsDiv, commentObj) {
+            // TODO: Make this look like a card like a GitHub comment
+
             // Build comment to be displayed
             // =============================
-            let divEl = $("<div>").addClass("article-comment");
-            let commentEl = $("<p>").text(commentObj.comment);
+            let commentDivEl = $("<div>").addClass("article-comment");
+
+            let commentHeaderEl = $("<div>").addClass("comment-header");
             let nameEl = $("<p>").text(commentObj.name);
-            let deleteBtnEl = $("<button>").addClass("btn btn-danger").text("Delete");
+            let deleteBtnEl = $("<button>").addClass("btn btn-danger").text("X");
+
+            commentHeaderEl.append(nameEl);
+            commentHeaderEl.append(deleteBtnEl);
+
+            let commentEl = $("<p>").text(commentObj.comment);
 
             // Append comment, name, and delete button to div
-            divEl.append(commentEl);
-            divEl.append(nameEl);
-            divEl.append(deleteBtnEl);
+            commentDivEl.append(commentHeaderEl);
+            commentDivEl.append(commentEl);
 
             // Append the div ot the previous comments div
-            previousCommentsDiv.append(divEl);
+            previousCommentsDiv.append(commentDivEl);
         }
 
         // TODO: Refactor get all comments for an article and display on page
@@ -53,7 +60,7 @@
             switch (state) {
                 // If the button state is hidden
                 case "hidden":
-                    // TODO: Get all comments
+                    // Get all comments
                     getComments(articleId)
                     // Change state to visible
                     $(this).attr("state", "visible");
@@ -77,7 +84,6 @@
             }
         });
 
-        // TODO: Add comment to db and get all comments once clicked
         // When a submit button is clicked
         $(".submit-btn").on("click", function () {
             event.preventDefault();
@@ -92,16 +98,9 @@
             let inputName = $(this).prev().prev().find("input").val();
             $(this).prev().prev().find("input").val("");
 
-            // Display comment TODO: remove this because getComments should use it
-            displayComment($(this).parent().prev(), {
-                name: inputName,
-                comment: inputComment
-            });
-
             // Get all comments
             getComments(articleId);
             
-
             // Post comment to API
             $.ajax(`/api/articles/${articleId}`, {
                 type: "POST",
