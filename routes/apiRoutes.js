@@ -37,7 +37,7 @@ function scrapePage(pageNumber) {
 
             // Article image
             // console.log($(element).parent().find("img").attr("src").trim());
-            let image = $(element).parent().find("img").attr("src").trim();
+            let image = $(element).parent().find("img").attr("src").trim().split("?");
 
             // Assign new article object to articleObj
             let articleObj = {
@@ -46,7 +46,7 @@ function scrapePage(pageNumber) {
                 author: author,
                 readTime: readTime,
                 link: link,
-                image: image
+                image: image[0]
             };
 
             // Add articleObj to Articles collection in DB

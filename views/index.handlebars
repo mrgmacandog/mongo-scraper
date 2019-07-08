@@ -1,0 +1,19 @@
+{{#each articles}}
+<div class="row no-gutters article-item">
+    <div class="col-md-4">
+        <a href={{link}}>
+            <img src={{image}} class="card-img" alt="{{title}}">
+        </a>
+    </div>
+    <div class="col-md-8">
+        <div class="card-body">
+            <a href={{link}}>
+                <h5 class="card-title">{{title}}</h5>
+            </a>
+            <p class="card-text">{{summary}}</p>
+            <p class=" card-text"><small class="text-muted">{{author}} | {{readTime}}</small></p>
+            <button class="btn btn-primary">Comments</button>
+        </div>
+    </div>
+</div>
+{{/each}}
