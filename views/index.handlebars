@@ -1,5 +1,5 @@
 {{#each articles}}
-<div class="row no-gutters article-item">
+<div class="row no-gutters article-item" id={{_id}}>
     <div class="col-md-4">
         <a href={{link}}>
             <img src={{image}} class="card-img" alt="{{title}}">
@@ -15,7 +15,16 @@
             <button class="btn btn-primary comment-btn" state="hidden">View Comments</button>
         </div>
         <div class="comment-section">
-            
+            {{!-- <p>Leave a comment</p> --}}
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control name-input" placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control comment-input" rows="3" placeholder="Leave a comment"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
     </div>
 </div>
