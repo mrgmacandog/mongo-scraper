@@ -3,7 +3,7 @@
     margin-bottom: 30px;
 }
 
-.card-body {
+.article-info {
     padding-top: 0;
     padding-bottom: 0;
 }
@@ -20,9 +20,16 @@
     margin-top: 10px;
 }
 
-.comment-header {
+/* TODO: Remove? */
+.card-header {
     display: flex;
     justify-content: space-between;
+}
+
+.comment-name {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin-bottom: 0;
 }
 
 .form-group {

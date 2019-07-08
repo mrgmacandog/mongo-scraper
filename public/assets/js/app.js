@@ -8,26 +8,47 @@
         // TODO: Refactor display comment
         function displayComment(previousCommentsDiv, commentObj) {
             // TODO: Make this look like a card like a GitHub comment
+            
+            // <div class="card">
+            //     <div class="card-header">
+            //         <p>Featured</p>
+            //         <button class="btn btn-secondary">Delete</button>
+            //     </div>
+
+            //     <div class="card-body">
+            //         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            //     </div>
+            // </div>
 
             // Build comment to be displayed
             // =============================
-            let commentDivEl = $("<div>").addClass("article-comment");
 
-            let commentHeaderEl = $("<div>").addClass("comment-header");
-            let nameEl = $("<p>").text(commentObj.name);
-            let deleteBtnEl = $("<button>").addClass("btn btn-danger").text("X");
+            // Create card div
+            let cardDivEl = $("<div>").addClass("card article-comment");
 
-            commentHeaderEl.append(nameEl);
-            commentHeaderEl.append(deleteBtnEl);
+            // Create card header element
+            let cardHeaderDivEl = $("<div>").addClass("card-header");
+            // Create name p element
+            let nameEl = $("<p>").addClass("comment-name").text(commentObj.name);
+            // Create delete button element
+            let deleteButtonEl = $("<button>").addClass("btn btn-light").text("Delete");
+            // Append nameEl and deleteButtonEl to cardHeaderDivEl
+            cardHeaderDivEl.append(nameEl);
+            cardHeaderDivEl.append(deleteButtonEl);
+            // Append cardHeaderDivEl to cardDivEl
+            cardDivEl.append(cardHeaderDivEl);
 
-            let commentEl = $("<p>").text(commentObj.comment);
+            // Create card body element
+            let cardBodyDivEl = $("<div>").addClass("card-body");
+            // Create card text element
+            let cardTextEl = $("<p>").addClass("card-text").text(commentObj.comment);
+            // Append cardTextEl to cardBodyDivEl
+            cardBodyDivEl.append(cardTextEl);
+            // Append cardBodyDivEl to cardDivEl
+            cardDivEl.append(cardBodyDivEl);
 
-            // Append comment, name, and delete button to div
-            commentDivEl.append(commentHeaderEl);
-            commentDivEl.append(commentEl);
-
-            // Append the div ot the previous comments div
-            previousCommentsDiv.append(commentDivEl);
+            // Append cardDivEl to previousCommentDiv
+            previousCommentsDiv.append(cardDivEl);
         }
 
         // TODO: Refactor get all comments for an article and display on page
@@ -45,7 +66,7 @@
                     // Display one comment
                     displayComment(previousCommentsDiv, comment);
                 });
- 
+
             });
         }
 
@@ -74,7 +95,7 @@
                     // Change state to hidden
                     $(this).attr("state", "hidden");
                     // Change text
-                    $(this).text("Show Comments");
+                    $(this).text("View Comments");
                     // Hide this article's comment section
                     $(this).parent().next().hide();
                     break;
@@ -100,7 +121,7 @@
 
             // Get all comments
             getComments(articleId);
-            
+
             // Post comment to API
             $.ajax(`/api/articles/${articleId}`, {
                 type: "POST",
