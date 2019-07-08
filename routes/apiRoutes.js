@@ -62,21 +62,21 @@ function scrapePage(pageNumber) {
 // Export API routes
 module.exports = app => {
     // Scrape route
-    app.get("/scrape", (req, res) => {
+    app.get("/api/scrape", (req, res) => {
         scrapePage(1);
 
         res.send("Scrape Complete");
     });
 
     // Get all articles from the database
-    app.get("/articles", (req, res) => {
+    app.get("/api/articles", (req, res) => {
         db.Article.find({})
             .then(dbArticle => res.json(dbArticle))
             .catch(err => res.json(err));
     });
 
     // Get a specific article from the database
-    app.get("/articles/:id", (req, res) => {
+    app.get("/api/articles/:id", (req, res) => {
         db.Article.findOne({ _id: req.params.id })
             .populate("comment")
             .then(dbArticle => res.json(dbArticle))
@@ -84,11 +84,15 @@ module.exports = app => {
     })
 
     // Add or update an Article's associated Comment
-    app.post("articles/:id", (req, res) => {
+    app.post("/api/articles/:id", (req, res) => {
         db.Comment.create(req.body)
-            .then(dbComment => dbArticle.findOneAndUpdate(
+            .then(dbComment => db.Article.findOneAndUpdate(
                 { _id: req.params.id },
-                { note: dbComment._id},
+                { $push:
+                    {
+                        comment: dbComment._id
+                    }
+                },
                 { new: true }
             ))
             .then(dbArticle => res.json(dbArticle))
