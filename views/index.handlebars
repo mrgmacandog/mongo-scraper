@@ -1,36 +1,19 @@
-<div class="row">
-    {{#each articles}}
+{{#each articles}}
+<div class="row no-gutters article-item">
     <div class="col-md-4">
-        <div class="card">
-            <img src={{image}} class="card-img-top" alt="title">
-            <p>Title: {{title}}</p>
-            <p>Summary: {{summary}}</p>
-            <p>Author: {{author}}</p>
-            <p>Read Time: {{readTime}}</p>
-            <p>Link: {{link}}</p>
-            <p>Image: {{image}}</p>
-            <p>Comment: {{comment}}</p>
+        <a href={{link}}>
+            <img src={{image}} class="card-img" alt="{{title}}">
+        </a>
+    </div>
+    <div class="col-md-8">
+        <div class="card-body">
+            <a href={{link}}>
+                <h5 class="card-title">{{title}}</h5>
+            </a>
+            <p class="card-text">{{summary}}</p>
+            <p class=" card-text"><small class="text-muted">{{author}} | {{readTime}}</small></p>
+            <button class="btn btn-primary">Comments</button>
         </div>
     </div>
-    {{/each}}
 </div>
-
-
-{{!-- 
-<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Cras justo odio</li>
-    <li class="list-group-item">Dapibus ac facilisis in</li>
-    <li class="list-group-item">Vestibulum at eros</li>
-  </ul>
-  <div class="card-body">
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
- --}}
+{{/each}}
