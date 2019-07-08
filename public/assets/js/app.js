@@ -5,6 +5,8 @@
 (function () {
     // Run JavaScript once the document is ready
     $(document).ready(function () {
+        // TODO: Refactor get all comments for an article and display on page
+
         // When a comment button is clicked
         $(".comment-btn").on("click", function () {
             // Assign button state to a variable
@@ -14,6 +16,7 @@
             switch (state) {
                 // If the button state is hidden
                 case "hidden":
+                    // TODO: Get all comments
                     // Change state to visible
                     $(this).attr("state", "visible");
                     // Change text
@@ -34,6 +37,33 @@
                     // Error: Should never happen; just in case
                     alert("Whoops, we made an error! Please try again later.")
             }
+        });
+
+        // TODO: Add comment to db and get all comments once clicked
+        // When a submit button is clicked
+        $(".submit-btn").on("click", function () {
+            event.preventDefault();
+
+            // Get comment name input and clear comment field
+            let inputComment = $(this).prev().find("textarea").val();
+            $(this).prev().find("textarea").val("");
+
+            // Get name input and clear input field
+            let inputName = $(this).prev().prev().find("input").val();
+            $(this).prev().prev().find("input").val("");
+
+            // Build comment to be displayed
+            // =============================
+            let divEl = $("<div>").addClass("article-comment");
+            let commentEl = $("<p>").text(inputComment);
+            let nameEl = $("<p>").text(inputName);
+            let deleteBtnEl = $("<button>").addClass("btn btn-danger").text("Delete");
+
+            divEl.append(commentEl);
+            divEl.append(nameEl);
+            divEl.append(deleteBtnEl);
+
+            $(this).parent().prev().append(divEl);
         });
     });
 })();
