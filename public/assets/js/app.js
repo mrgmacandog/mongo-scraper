@@ -30,8 +30,9 @@
             let cardHeaderDivEl = $("<div>").addClass("card-header");
             // Create name p element
             let nameEl = $("<p>").addClass("comment-name").text(commentObj.name);
-            // Create delete button element
-            let deleteButtonEl = $("<button>").addClass("btn btn-light").text("Delete");
+            // Create delete button element with article-id attribute
+            let articleId = previousCommentsDiv.attr("article-id");
+            let deleteButtonEl = $("<button>").addClass("btn btn-light").attr("article-id", articleId).text("Delete");
             // Append nameEl and deleteButtonEl to cardHeaderDivEl
             cardHeaderDivEl.append(nameEl);
             cardHeaderDivEl.append(deleteButtonEl);
@@ -104,6 +105,9 @@
                     alert("Whoops, we made an error! Please try again later.")
             }
         });
+
+        // When a delete button is clicked
+        // $(".");
 
         // When a submit button is clicked
         $(".submit-btn").on("click", function () {
