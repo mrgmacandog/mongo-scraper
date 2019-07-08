@@ -6,6 +6,7 @@
     // Run JavaScript once the document is ready
     $(document).ready(function () {
         // TODO: Refactor get all comments for an article and display on page
+        //       Should be used for comment-button, delete-button, and submit-button
 
         // When a comment button is clicked
         $(".comment-btn").on("click", function () {
