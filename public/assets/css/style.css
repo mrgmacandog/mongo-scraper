@@ -7,3 +7,9 @@
     padding-top: 0;
     padding-bottom: 0;
 }
+
+.comment-section {
+    height: 100px;
+    background-color: red;
+    display: none;
+}
