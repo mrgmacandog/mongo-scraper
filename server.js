@@ -28,8 +28,14 @@ app.use(express.static("public"));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/entrepreneur";
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+
+/*
 // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/entrepreneur", { useNewUrlParser: true });
+*/
 
 // Routes
 require("./routes/apiRoutes")(app);
