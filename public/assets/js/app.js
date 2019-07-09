@@ -5,10 +5,25 @@
 (function () {
     // Run JavaScript once the document is ready
     $(document).ready(function () {
+        // TODO:
+        // Request to delete comment
+        function deleteComment(commentId, articleId) {
+            alert(commentId);
+
+            // TODO: figure out how to to delete comments and if it will be removed from article
+            $.ajax(`/api/articles/${articleId}`, {
+                type: 'DELETE'
+            }).then(
+                response => getComments(articleId)
+            ).catch(
+                err => console.log(err)
+            );
+        };
+
         // TODO: Refactor display comment
-        function displayComment(previousCommentsDiv, commentObj) {
+        function displayComment(articleId, previousCommentsDiv, commentObj) {
             // TODO: Make this look like a card like a GitHub comment
-            
+
             // <div class="card">
             //     <div class="card-header">
             //         <p>Featured</p>
@@ -30,9 +45,10 @@
             let cardHeaderDivEl = $("<div>").addClass("card-header");
             // Create name p element
             let nameEl = $("<p>").addClass("comment-name").text(commentObj.name);
-            // Create delete button element with article-id attribute
-            let articleId = previousCommentsDiv.attr("article-id");
-            let deleteButtonEl = $("<button>").addClass("btn btn-light").attr("article-id", articleId).text("Delete");
+            // Create delete button element with comment-id attribute
+            let deleteButtonEl = $("<button>").addClass("btn btn-light delete-btn").attr("comment-id", commentObj._id).text("Delete");
+            // Add on click event handler to delete button
+            deleteButtonEl.on("click", () => deleteComment(commentObj._id, articleId));
             // Append nameEl and deleteButtonEl to cardHeaderDivEl
             cardHeaderDivEl.append(nameEl);
             cardHeaderDivEl.append(deleteButtonEl);
@@ -65,7 +81,7 @@
                 // Populate the div with each comment
                 response.comments.forEach(comment => {
                     // Display one comment
-                    displayComment(previousCommentsDiv, comment);
+                    displayComment(articleId, previousCommentsDiv, comment);
                 });
 
             });
@@ -105,9 +121,6 @@
                     alert("Whoops, we made an error! Please try again later.")
             }
         });
-
-        // When a delete button is clicked
-        // $(".");
 
         // When a submit button is clicked
         $(".submit-btn").on("click", function () {
