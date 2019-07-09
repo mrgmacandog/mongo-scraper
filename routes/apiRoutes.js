@@ -83,14 +83,30 @@ module.exports = app => {
             .catch(err => res.json(err));
     })
 
-    // Add or update an Article's associated Comment
+    // Add an Article's associated Comment
     app.post("/api/articles/:id", (req, res) => {
         db.Comment.create(req.body)
-            .then(dbComment => db.Article.update(
+            .then(dbComment => db.Article.updateOne(
                 { _id: req.params.id },
                 { $push:
                     {
                         comments: dbComment._id
+                    }
+                },
+                { new: true }
+            ))
+            .then(dbArticle => res.json(dbArticle))
+            .catch(err => res.json(err));
+    });
+
+    // Delete an Article's associated Comment
+    app.delete("/api/articles/:articleId/comments/:commentId", (req, res) => {
+        db.Comment.deleteOne({ _id: req.params.commentId })
+            .then(() => db.Article.update(
+                { _id: req.params.articleId },
+                { $pull:
+                    {
+                        comments: commentId
                     }
                 },
                 { new: true }
