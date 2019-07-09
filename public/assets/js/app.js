@@ -8,13 +8,16 @@
         // TODO:
         // Request to delete comment
         function deleteComment(commentId, articleId) {
-            alert(commentId);
+            // alert(commentId);
 
             // TODO: figure out how to to delete comments and if it will be removed from article
-            $.ajax(`/api/articles/${articleId}`, {
+            $.ajax(`/api/articles/${articleId}/comments/${commentId}`, {
                 type: 'DELETE'
             }).then(
-                response => getComments(articleId)
+                // FIXME:
+                response => {
+                    getComments(articleId);
+                }
             ).catch(
                 err => console.log(err)
             );
@@ -137,7 +140,7 @@
             $(this).prev().prev().find("input").val("");
 
             // Get all comments
-            getComments(articleId);
+
 
             // Post comment to API
             $.ajax(`/api/articles/${articleId}`, {
@@ -146,7 +149,11 @@
                     name: inputName,
                     comment: inputComment
                 }
-            });
+            }).then(
+                response => getComments(articleId)
+            ).catch(
+                err => console.log(err)
+            );
         });
     });
 })();
